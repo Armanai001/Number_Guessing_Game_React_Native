@@ -16,10 +16,10 @@ export default function Card({title, children, style}: { title: string, children
 
 const styles = StyleSheet.create({
     container: {
-        borderColor: '#cc1717',
+        borderColor: '#3b0303',
         borderWidth: 2,
         borderStyle: 'solid',
-        borderRadius: 12,
+        borderRadius: 10,
         margin: 2,
         height: '100%',
         backgroundColor: '#3b0404',

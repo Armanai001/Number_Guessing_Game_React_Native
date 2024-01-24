@@ -16,7 +16,7 @@ export default function PrimaryButton({children, onPress}: { children: any, onPr
 const styles = StyleSheet.create({
     container: {
         borderRadius: 10,
-        backgroundColor: "#930a23",
+        backgroundColor: "#751c2c",
         width: '100%',
         height: "100%",
         justifyContent: 'center'
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },
     buttonPressed: {
         opacity: 0.85,
-        backgroundColor: '#930a23',
+        backgroundColor: '#5b0e1d',
         borderRadius: 10
     }
 })

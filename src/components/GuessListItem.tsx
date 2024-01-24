@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 15,
         margin: 10,
-        backgroundColor: '#3b0404',
+        backgroundColor: '#750c0c',
     },
     chance: {
         color: '#f3ca3f',
