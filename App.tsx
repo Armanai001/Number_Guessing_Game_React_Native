@@ -4,11 +4,12 @@ import {LinearGradient} from "expo-linear-gradient";
 
 export default function App() {
     return (
-        <LinearGradient colors={['#360101', '#e0b00f']} style={styles.container}>
+        <LinearGradient colors={['#4e0329', '#ddb52f']} style={styles.container}>
             <ImageBackground
                 source={require('./assets/images/BackGround.jpg')}
                 resizeMode="cover"
-                style={styles.backImage}
+                style={styles.container}
+                imageStyle={styles.backImage}
             >
                 <SafeAreaView>
                     <View style={styles.box}>
@@ -27,9 +28,10 @@ const styles = StyleSheet.create({
     },
     backImage: {
         flex: 1,
-        opacity: 0.9
+        opacity: 0.25
     },
-    box:{
-        marginTop:'50%'
+    box: {
+        marginTop: '20%',
+        height: '70%'
     }
 });
