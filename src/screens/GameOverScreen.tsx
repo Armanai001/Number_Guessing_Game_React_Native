@@ -16,7 +16,7 @@ export default function GameOverScreen({startNewGame, totalGuesses}: { startNewG
             <Image source={require('../../assets/images/Success.png')} style={styles.imageStyle}/>
         </View>
         <Text style={styles.message}>
-            Total Rounds taken by phone is {totalGuesses}
+            Total rounds taken by phone to guess your number is {totalGuesses}
         </Text>
         <View style={styles.buttonContainer}>
             <PrimaryButton onPress={handleNewGame}>
