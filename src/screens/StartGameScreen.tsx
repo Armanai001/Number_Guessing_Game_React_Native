@@ -1,4 +1,4 @@
-import {Alert, StyleSheet, TextInput, View} from "react-native";
+import {Alert, Dimensions, StyleSheet, TextInput, View} from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import {useState} from "react";
 import Card from "../components/Card";
@@ -60,10 +60,16 @@ export default function StartGameScreen({startGame}: { startGame: (num: number) 
 
 }
 
+// In dimensions.get ios has no difference in windows or screen
+// In android : window is entire width or height excluding status bar and screen is including status bar
+const deviceDimension = Dimensions.get('window');
+
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         height: '100%',
+        width: deviceDimension.width < 300 ? "95%" : 370,
+        alignSelf: 'center'
     },
     cardStyles: {
         height: '50%',
