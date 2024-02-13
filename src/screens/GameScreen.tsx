@@ -6,16 +6,15 @@ import GuessListItem from "../components/GuessListItem";
 import {useEffect, useState} from "react";
 
 
-export default function GameScreen({showResult, num}: { showResult: any, num: number }) {
+export default function GameScreen({showResult, num}: {
+    showResult: (totalGuesses: number, num: number) => void,
+    num: number
+}) {
 
-    // Generating random numbers
-    let minimum = 1;
-    let maximum = 100;
-
-    const generateRandomNumber = (minimum: number, maximum: number, exclude: number): number => {
+    const generateRandomNumber = (minimum: number, maximum: number, exclude: number[]): number => {
         const randomNumber = Math.floor(Math.random() * (maximum - minimum)) + minimum;
 
-        if (randomNumber === exclude) {
+        if (exclude.includes(randomNumber)) {
             return generateRandomNumber(minimum, maximum, exclude);
         } else {
             return randomNumber;
@@ -23,19 +22,16 @@ export default function GameScreen({showResult, num}: { showResult: any, num: nu
     }
 
     // Game controls
-    const initialGuess = generateRandomNumber(1, 100, num);
-    const [currentGuess, setCurrentGuess] = useState(initialGuess)
-    const [guessArray, setGuessArray] = useState([initialGuess])
+    const initialGuess = generateRandomNumber(1, 100, [num]);
+    const [currentGuess, setCurrentGuess] = useState(initialGuess);
+    const [guessArray, setGuessArray] = useState([initialGuess]);
+    const [minimum, setMinimum] = useState(1);
+    const [maximum, setMaximum] = useState(100);
 
-
-    useEffect(() => {
-        maximum = 100
-        minimum = 1
-    }, [])
 
     useEffect(() => {
         if (currentGuess === num) {
-            showResult(guessArray.length);
+            showResult(guessArray.length, num);
         }
     }, [currentGuess, num, showResult])
 
@@ -49,15 +45,19 @@ export default function GameScreen({showResult, num}: { showResult: any, num: nu
             return;
         }
 
-        if (direction === 'lower') {
-            maximum = currentGuess;
-        } else {
-            minimum = currentGuess + 1;
+        function tryAgain(min: number, max: number) {
+            const newGuess = generateRandomNumber(min, max, guessArray);
+            setCurrentGuess(() => newGuess);
+            setGuessArray((prevGuessArray) => [...prevGuessArray, newGuess]);
         }
 
-        const newGuess = generateRandomNumber(minimum, maximum, currentGuess);
-        setCurrentGuess(newGuess);
-        setGuessArray((prevGuessArray) => [...prevGuessArray, newGuess]);
+        if (direction === 'lower') {
+            setMaximum(() => currentGuess);
+            tryAgain(minimum, currentGuess);
+        } else {
+            setMinimum(() => currentGuess + 1);
+            tryAgain(currentGuess + 1, maximum);
+        }
     }
 
     return <View>

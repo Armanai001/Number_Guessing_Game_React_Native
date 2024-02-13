@@ -2,7 +2,11 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import Title from "../components/Title";
 import PrimaryButton from "../components/PrimaryButton";
 
-export default function GameOverScreen({startNewGame, totalGuesses}: { startNewGame: any, totalGuesses: number }) {
+export default function GameOverScreen({startNewGame, totalGuesses, guessNumber}: {
+    startNewGame: () => void,
+    totalGuesses: number,
+    guessNumber: number
+}) {
 
     const handleNewGame = () => {
         startNewGame();
@@ -16,7 +20,7 @@ export default function GameOverScreen({startNewGame, totalGuesses}: { startNewG
             <Image source={require('../../assets/images/Success.png')} style={styles.imageStyle}/>
         </View>
         <Text style={styles.message}>
-            Total rounds taken by phone to guess your number is {totalGuesses}
+            Total rounds taken by phone to guess number {guessNumber} is {totalGuesses}
         </Text>
         <View style={styles.buttonContainer}>
             <PrimaryButton onPress={handleNewGame}>

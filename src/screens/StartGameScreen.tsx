@@ -4,7 +4,7 @@ import {useState} from "react";
 import Card from "../components/Card";
 import Title from "../components/Title";
 
-export default function StartGameScreen({startGame}: { startGame: any }) {
+export default function StartGameScreen({startGame}: { startGame: (num: number) => void }) {
     const [enteredNumber, setEnteredNumber] = useState('');
 
     const resetInput = () => {

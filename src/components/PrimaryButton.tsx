@@ -3,7 +3,7 @@ import {Platform, Pressable, StyleSheet, Text, View} from "react-native";
 export default function PrimaryButton({children, onPress}: { children: any, onPress: any }) {
     return <Pressable
         onPress={onPress}
-        android_ripple={{color: '#640233'}}
+        android_ripple={{ radius:3}}
         style={({pressed}) => pressed && styles.buttonPressed}
     >
         <View style={styles.container}>

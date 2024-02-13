@@ -17,8 +17,8 @@ export default function App() {
         setCurrentScreen(<GameScreen num={num} showResult={showResults}/>)
     }
 
-    const showResults = (totalGuesses: number) => {
-        setCurrentScreen(<GameOverScreen startNewGame={startNewGame} totalGuesses={totalGuesses}/>)
+    const showResults = (totalGuesses: number, num: number) => {
+        setCurrentScreen(<GameOverScreen startNewGame={startNewGame} totalGuesses={totalGuesses} guessNumber={num}/>)
     }
 
     useEffect(() => {
