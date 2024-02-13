@@ -1,9 +1,18 @@
-import {ImageBackground, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+    ImageBackground,
+    KeyboardAvoidingView,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    useWindowDimensions,
+    View
+} from 'react-native';
 import StartGameScreen from "./src/screens/StartGameScreen";
 import {LinearGradient} from "expo-linear-gradient";
 import {useEffect, useState} from "react";
-import GameScreen from "./src/screens/GameScreen";
 import GameOverScreen from "./src/screens/GameOverScreen";
+import {StatusBar} from "expo-status-bar";
+import GameScreen from "./src/screens/GameScreen";
 
 export default function App() {
     const [currentScreen, setCurrentScreen] = useState(<></>);
@@ -25,9 +34,11 @@ export default function App() {
         startNewGame()
     }, [])
 
+    const {width, height} = useWindowDimensions();
 
     return (
         <LinearGradient colors={['#4e0329', '#ddb52f']} style={styles.container}>
+            <StatusBar style='light'/>
             <ImageBackground
                 source={require('./assets/images/BackGround.jpg')}
                 resizeMode="cover"
@@ -35,9 +46,15 @@ export default function App() {
                 imageStyle={styles.backImage}
             >
                 <SafeAreaView>
-                    <View style={styles.box}>
-                        {currentScreen && currentScreen}
-                    </View>
+
+                            <View style={{
+                                minHeight: 380,
+                                maxHeight: 500,
+                                marginTop: height > width ? "15%" : 25,
+                                height: "100%"
+                            }}>
+                                {currentScreen && currentScreen}
+                            </View>
                 </SafeAreaView>
             </ImageBackground>
         </LinearGradient>
@@ -52,9 +69,5 @@ const styles = StyleSheet.create({
     backImage: {
         flex: 1,
         opacity: 0.25
-    },
-    box: {
-        marginTop: '15%',
-        height: '70%'
     }
 });

@@ -11,15 +11,15 @@ export default function Title({children}: { children: any }) {
 const styles = StyleSheet.create({
     titleContainer: {
         marginBottom: 40,
-        padding:3,
-
+        padding: 3,
+        margin: 20
     },
     titleText: {
         color: 'white',
         textAlign: 'center',
         fontSize: 25,
         fontWeight: 'bold',
-        padding:5
+        padding: 5
     }
 
 })

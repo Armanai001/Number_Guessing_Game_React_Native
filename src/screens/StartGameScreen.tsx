@@ -1,4 +1,4 @@
-import {Alert, Dimensions, StyleSheet, TextInput, View} from "react-native";
+import {Alert, Dimensions, KeyboardAvoidingView, ScrollView, StyleSheet, TextInput, View} from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 import {useState} from "react";
 import Card from "../components/Card";
@@ -25,39 +25,45 @@ export default function StartGameScreen({startGame}: { startGame: (num: number) 
         }
     }
 
-    return <View style={styles.container}>
-        <Title>
-            Start a New Game
-        </Title>
-        <Card title="Enter a number" style={styles.cardStyles}>
 
-            <View style={styles.inputContainer}>
-                <TextInput style={styles.inputField}
-                           keyboardType='number-pad'
-                           maxLength={2}
-                           autoCapitalize='none'
-                           autoCorrect={false}
-                           value={enteredNumber}
-                           onChangeText={setEnteredNumber}
-                />
-            </View>
+    return <>
+        <ScrollView style={{flex:1}}>
+            <KeyboardAvoidingView style={{flex:1}} behavior='position'>
+                <View style={styles.container}>
+                    <Title>
+                        Start a New Game
+                    </Title>
+                    <Card title="Enter a number" style={styles.cardStyles}>
+
+                        <View style={styles.inputContainer}>
+                            <TextInput style={styles.inputField}
+                                       keyboardType='number-pad'
+                                       maxLength={2}
+                                       autoCapitalize='none'
+                                       autoCorrect={false}
+                                       value={enteredNumber}
+                                       onChangeText={setEnteredNumber}
+                            />
+                        </View>
 
 
-            <View style={styles.buttonContainer}>
-                <View style={styles.buttonText}>
-                    <PrimaryButton onPress={resetInput}>
-                        Reset
-                    </PrimaryButton>
+                        <View style={styles.buttonContainer}>
+                            <View style={styles.buttonText}>
+                                <PrimaryButton onPress={resetInput}>
+                                    Reset
+                                </PrimaryButton>
+                            </View>
+                            <View style={styles.buttonText}>
+                                <PrimaryButton onPress={confirmInput}>
+                                    Confirm
+                                </PrimaryButton>
+                            </View>
+                        </View>
+                    </Card>
                 </View>
-                <View style={styles.buttonText}>
-                    <PrimaryButton onPress={confirmInput}>
-                        Confirm
-                    </PrimaryButton>
-                </View>
-            </View>
-        </Card>
-    </View>
-
+            </KeyboardAvoidingView>
+        </ScrollView>
+    </>
 }
 
 // In dimensions.get ios has no difference in windows or screen
@@ -66,8 +72,8 @@ const deviceDimension = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        height: '100%',
+        minHeight: 390,
+        maxHeight: 450,
         width: deviceDimension.width < 300 ? "95%" : 370,
         alignSelf: 'center'
     },

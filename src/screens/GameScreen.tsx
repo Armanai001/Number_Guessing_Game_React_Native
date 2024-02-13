@@ -1,9 +1,9 @@
-import {Alert, FlatList, StyleSheet, Text, View} from "react-native";
+import {Alert, FlatList, StyleSheet, Text, useWindowDimensions, View} from "react-native";
 import Title from "../components/Title";
-import Card from "../components/Card";
-import PrimaryButton from "../components/PrimaryButton";
 import GuessListItem from "../components/GuessListItem";
 import {useEffect, useState} from "react";
+import Card from "../components/Card";
+import PrimaryButton from "../components/PrimaryButton";
 
 
 export default function GameScreen({showResult, num}: {
@@ -27,6 +27,7 @@ export default function GameScreen({showResult, num}: {
     const [guessArray, setGuessArray] = useState([initialGuess]);
     const [minimum, setMinimum] = useState(1);
     const [maximum, setMaximum] = useState(100);
+    const {width, height} = useWindowDimensions();
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ export default function GameScreen({showResult, num}: {
         function tryAgain(min: number, max: number) {
             const newGuess = generateRandomNumber(min, max, guessArray);
             setCurrentGuess(() => newGuess);
-            setGuessArray((prevGuessArray) => [...prevGuessArray, newGuess]);
+            setGuessArray((prevGuessArray) => [newGuess, ...prevGuessArray]);
         }
 
         if (direction === 'lower') {
@@ -60,36 +61,65 @@ export default function GameScreen({showResult, num}: {
         }
     }
 
-    return <View>
-        <Title>
-            Opponent's Guess
-        </Title>
-        <View style={styles.opponentGuess}>
-            <Text style={{fontSize: 50}}>
-                {currentGuess}
-            </Text>
-        </View>
-        <Card title='Higher or Lower ?' style={styles.cardStyles}>
-            <View style={styles.buttonContainer}>
+    return <View style={{height: (width > height ? '90%' : '100%')}}>
+        <View>
+            <Title>
+                Opponent's Guess
+            </Title>
+            <View style={styles.buttons_L}>
+                {
+                    width > height &&
+                    <View style={{width: 150, height: 50}}>
+                        <PrimaryButton onPress={() => {
+                            handleGuess('higher')
+                        }}>
+                            +
+                        </PrimaryButton>
+                    </View>
+                }
 
-                <View style={styles.buttons}>
-                    <PrimaryButton onPress={() => {
-                        handleGuess('higher')
-                    }}>
-                        +
-                    </PrimaryButton>
+                <View style={[styles.opponentGuess, height < width && {height: 60, width: '30%'}]}>
+                    <Text style={{fontSize: height < width ? 20 : 50}}>
+                        {currentGuess}
+                    </Text>
                 </View>
-                <View style={styles.buttons}>
-                    <PrimaryButton onPress={() => {
-                        handleGuess('lower')
-                    }}>
-                        -
-                    </PrimaryButton>
-                </View>
+
+                {
+                    width > height &&
+                    <View style={{width: 150, height: 50}}>
+                        <PrimaryButton onPress={() => {
+                            handleGuess('lower')
+                        }}>
+                            -
+                        </PrimaryButton>
+                    </View>
+                }
             </View>
-        </Card>
 
-        <View style={styles.listContainer}>
+            {
+                width < height && <Card title='Higher or Lower ?' style={styles.cardStyles}>
+                    <View style={styles.buttonContainer}>
+
+                        <View style={styles.buttons}>
+                            <PrimaryButton onPress={() => {
+                                handleGuess('higher')
+                            }}>
+                                +
+                            </PrimaryButton>
+                        </View>
+                        <View style={styles.buttons}>
+                            <PrimaryButton onPress={() => {
+                                handleGuess('lower')
+                            }}>
+                                -
+                            </PrimaryButton>
+                        </View>
+                    </View>
+                </Card>
+            }
+
+        </View>
+        <View style={[styles.listContainer, width > height && {height: '50%'}]}>
             {
                 <FlatList data={guessArray}
                           renderItem={
@@ -107,7 +137,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#f3ca3f',
         width: '50%',
         height: 100,
-        marginBottom: 20,
         display: 'flex',
         justifyContent: "center",
         alignSelf: 'center',
@@ -123,7 +152,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: "space-between",
         alignSelf: 'center',
-
+        marginTop: 20
     },
     buttonContainer: {
         display: 'flex',
@@ -136,9 +165,15 @@ const styles = StyleSheet.create({
         height: 60,
         padding: 5,
     },
+    buttons_L: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
     listContainer: {
-        height: 350,
-        marginTop: 15
-
+        marginVertical: 5,
+        height: '70%',
+        margin: 3,
     }
 })
